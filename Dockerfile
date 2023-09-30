@@ -18,15 +18,15 @@ COPY Cargo.toml Cargo.lock ./
 # A dummy build to get the dependencies compiled and cached
 RUN cargo build --target x86_64-unknown-linux-musl --release
 
-# Copy the real application code into the container
+# Copy the real library code into the container
 COPY . .
 
-# Build the application
+# Build the library
 RUN cargo build --target x86_64-unknown-linux-musl --release
 
 # Note: stripping the .so file caused an error when loading it in python
 
-# Use a slim image for running the application
+# Use a slim image for running the library
 FROM alpine as runtime
 
 # Using gcompat is almost certainly a hack, but it works
